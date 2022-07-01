@@ -11,7 +11,7 @@ Public Class frmPagos
     Public objCheque As New Cheque
 
     Private Sub frmPagos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
+        ' se realizo el primer commit GIT
         Try
             Me.estadoAbono = 0
             'Me.txtImporte.Focus()
