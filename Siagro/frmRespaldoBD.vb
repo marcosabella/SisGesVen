@@ -85,7 +85,7 @@ Public Class frmRespaldoBD
             smtp.Port = PuertoSMTP
             smtp.Timeout = 30000
             smtp.Host = ServidorSMTP  ' Config.ServidorSMTP
-            smtp.EnableSsl = True
+            smtp.EnableSsl = False
             smtp.Credentials = New NetworkCredential(LCase(CuentaCorreoEnvio), ClaveCorreoEnvio)
             smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network
 

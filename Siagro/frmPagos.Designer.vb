@@ -51,6 +51,13 @@ Partial Class frmPagos
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lblMensaje = New System.Windows.Forms.Label()
         Me.txtObservaciones = New System.Windows.Forms.TextBox()
+        Me.cboBanco = New System.Windows.Forms.ComboBox()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.txtNroCupon = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.cboTipoTarjeta = New System.Windows.Forms.ComboBox()
+        Me.txtRecargo = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.tssBarraVentas.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -62,7 +69,7 @@ Partial Class frmPagos
         Me.tssBarraVentas.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tssNuevo, Me.tssBorrar, Me.tssModificar, Me.ToolStripSeparator2, Me.tssConsultar, Me.ToolStripSeparator1, Me.tssCerrar})
         Me.tssBarraVentas.Location = New System.Drawing.Point(0, 0)
         Me.tssBarraVentas.Name = "tssBarraVentas"
-        Me.tssBarraVentas.Size = New System.Drawing.Size(375, 38)
+        Me.tssBarraVentas.Size = New System.Drawing.Size(370, 38)
         Me.tssBarraVentas.TabIndex = 48
         Me.tssBarraVentas.Text = "ToolStrip1"
         '
@@ -136,9 +143,9 @@ Partial Class frmPagos
         Me.Panel3.Controls.Add(Me.btnCancelar)
         Me.Panel3.Controls.Add(Me.btnGuardar)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel3.Location = New System.Drawing.Point(0, 299)
+        Me.Panel3.Location = New System.Drawing.Point(0, 370)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(375, 43)
+        Me.Panel3.Size = New System.Drawing.Size(370, 43)
         Me.Panel3.TabIndex = 47
         '
         'btnImprimir
@@ -179,6 +186,13 @@ Partial Class frmPagos
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.txtRecargo)
+        Me.GroupBox2.Controls.Add(Me.Label16)
+        Me.GroupBox2.Controls.Add(Me.cboTipoTarjeta)
+        Me.GroupBox2.Controls.Add(Me.cboBanco)
+        Me.GroupBox2.Controls.Add(Me.Label32)
+        Me.GroupBox2.Controls.Add(Me.txtNroCupon)
+        Me.GroupBox2.Controls.Add(Me.Label28)
         Me.GroupBox2.Controls.Add(Me.btnEditarMedioPago)
         Me.GroupBox2.Controls.Add(Me.Label27)
         Me.GroupBox2.Controls.Add(Me.cboCondVenta)
@@ -186,7 +200,7 @@ Partial Class frmPagos
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 128)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(347, 88)
+        Me.GroupBox2.Size = New System.Drawing.Size(347, 159)
         Me.GroupBox2.TabIndex = 46
         Me.GroupBox2.TabStop = False
         '
@@ -224,9 +238,9 @@ Partial Class frmPagos
         '
         Me.txtImporte.BackColor = System.Drawing.Color.AntiqueWhite
         Me.txtImporte.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtImporte.Location = New System.Drawing.Point(109, 47)
+        Me.txtImporte.Location = New System.Drawing.Point(109, 133)
         Me.txtImporte.Name = "txtImporte"
-        Me.txtImporte.Size = New System.Drawing.Size(105, 20)
+        Me.txtImporte.Size = New System.Drawing.Size(185, 20)
         Me.txtImporte.TabIndex = 1
         Me.txtImporte.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -235,7 +249,7 @@ Partial Class frmPagos
         Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(8, 47)
+        Me.Label1.Location = New System.Drawing.Point(8, 133)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(95, 24)
         Me.Label1.TabIndex = 19
@@ -349,18 +363,89 @@ Partial Class frmPagos
         '
         Me.txtObservaciones.BackColor = System.Drawing.Color.AntiqueWhite
         Me.txtObservaciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtObservaciones.Location = New System.Drawing.Point(12, 222)
+        Me.txtObservaciones.Location = New System.Drawing.Point(12, 293)
         Me.txtObservaciones.Multiline = True
         Me.txtObservaciones.Name = "txtObservaciones"
         Me.txtObservaciones.ReadOnly = True
         Me.txtObservaciones.Size = New System.Drawing.Size(347, 71)
         Me.txtObservaciones.TabIndex = 50
         '
+        'cboBanco
+        '
+        Me.cboBanco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboBanco.FormattingEnabled = True
+        Me.cboBanco.Items.AddRange(New Object() {"Bco. MACRO", "Bco. CÓRDOBA"})
+        Me.cboBanco.Location = New System.Drawing.Point(109, 44)
+        Me.cboBanco.Name = "cboBanco"
+        Me.cboBanco.Size = New System.Drawing.Size(185, 21)
+        Me.cboBanco.TabIndex = 63
+        '
+        'Label32
+        '
+        Me.Label32.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label32.ForeColor = System.Drawing.Color.Black
+        Me.Label32.Location = New System.Drawing.Point(6, 41)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(97, 20)
+        Me.Label32.TabIndex = 62
+        Me.Label32.Text = "Tarjeta"
+        Me.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtNroCupon
+        '
+        Me.txtNroCupon.Location = New System.Drawing.Point(109, 71)
+        Me.txtNroCupon.Name = "txtNroCupon"
+        Me.txtNroCupon.Size = New System.Drawing.Size(185, 20)
+        Me.txtNroCupon.TabIndex = 61
+        '
+        'Label28
+        '
+        Me.Label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.ForeColor = System.Drawing.Color.Black
+        Me.Label28.Location = New System.Drawing.Point(6, 70)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(97, 20)
+        Me.Label28.TabIndex = 60
+        Me.Label28.Text = "Cupón N°:"
+        Me.Label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'cboTipoTarjeta
+        '
+        Me.cboTipoTarjeta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboTipoTarjeta.FormattingEnabled = True
+        Me.cboTipoTarjeta.Location = New System.Drawing.Point(109, 44)
+        Me.cboTipoTarjeta.Name = "cboTipoTarjeta"
+        Me.cboTipoTarjeta.Size = New System.Drawing.Size(185, 21)
+        Me.cboTipoTarjeta.TabIndex = 64
+        '
+        'txtRecargo
+        '
+        Me.txtRecargo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtRecargo.Location = New System.Drawing.Point(109, 97)
+        Me.txtRecargo.Name = "txtRecargo"
+        Me.txtRecargo.Size = New System.Drawing.Size(185, 21)
+        Me.txtRecargo.TabIndex = 66
+        Me.txtRecargo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label16
+        '
+        Me.Label16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.ForeColor = System.Drawing.Color.Black
+        Me.Label16.Location = New System.Drawing.Point(6, 97)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(97, 20)
+        Me.Label16.TabIndex = 65
+        Me.Label16.Text = "% Recargo:"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'frmPagos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(375, 342)
+        Me.ClientSize = New System.Drawing.Size(370, 413)
         Me.Controls.Add(Me.txtObservaciones)
         Me.Controls.Add(Me.lblMensaje)
         Me.Controls.Add(Me.tssBarraVentas)
@@ -413,4 +498,11 @@ Partial Class frmPagos
     Friend WithEvents Label27 As Label
     Friend WithEvents cboCondVenta As ComboBox
     Friend WithEvents txtObservaciones As TextBox
+    Friend WithEvents cboBanco As ComboBox
+    Friend WithEvents Label32 As Label
+    Friend WithEvents txtNroCupon As TextBox
+    Friend WithEvents Label28 As Label
+    Friend WithEvents cboTipoTarjeta As ComboBox
+    Friend WithEvents txtRecargo As TextBox
+    Friend WithEvents Label16 As Label
 End Class

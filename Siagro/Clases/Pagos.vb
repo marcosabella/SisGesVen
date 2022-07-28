@@ -114,7 +114,7 @@ Public Class Pagos
             oSqlConnection = New OleDbConnection(strConection)
             Dim CadenaSQL As String
             CadenaSQL = "Insert Into Pagos (idCliente,fecha_pago,importe,observaciones,idCondicion_venta) Values (" & objPago.idCliente & ",'" & objPago.fecha_pago & "', '" & objPago.importe & "', '" & objPago.observaciones & "', " & objPago.idCondicion_venta & ")"
-            'CadenaSQL = ""
+
             Dim oSqlCommand As New OleDbCommand(CadenaSQL, oSqlConnection)
             oSqlConnection.Open()
             oSqlCommand.ExecuteNonQuery()
@@ -284,4 +284,193 @@ Public Class Pagos
 #End Region
 
 #End Region
+
+#Region "Tarjetas de crédito"
+    Public Function buscarTarjetasPago() As DataSet
+        Try
+            Dim cadena As String
+            cadena = "select * from Tarjetas"
+            oSqlConnection = New OleDbConnection(strConection)
+            oSqlDataAdapter = New OleDbDataAdapter(cadena, oSqlConnection)
+            oDataSet = New DataSet
+            oSqlDataAdapter.Fill(oDataSet)
+            Return oDataSet
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+
+    Public Function buscarTarjetasPago(ByVal idTarjeta As Integer) As DataSet
+        Try
+            Dim cadena As String
+            cadena = "select * from Tarjetas where idTarjeta = " & idTarjeta
+            oSqlConnection = New OleDbConnection(strConection)
+            oSqlDataAdapter = New OleDbDataAdapter(cadena, oSqlConnection)
+            oDataSet = New DataSet
+            oSqlDataAdapter.Fill(oDataSet)
+            Return oDataSet
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+
+    Public Function nuevaTarjetaPorPAgo(ByRef idTarjeta As Integer, ByRef idOrden As Integer, ByRef idPago As Integer, ByRef cuponNumero As Integer) As Boolean
+        Try
+            oSqlConnection = New OleDbConnection(strConection)
+            Dim CadenaSQL As String
+            CadenaSQL = "Insert Into TarjetaPorPago (idTarjeta, idOrden, idPago,cuponNumero) Values (" & idTarjeta & "," & idOrden & "," & idPago & "," & cuponNumero & ")"
+            'CadenaSQL = ""
+            Dim oSqlCommand As New OleDbCommand(CadenaSQL, oSqlConnection)
+            oSqlConnection.Open()
+            oSqlCommand.ExecuteNonQuery()
+            oSqlConnection.Close()
+        Catch ex As Exception
+            MsgBox("Disculpe. No se ha podido registrar el detalle de la venta")
+            Return False
+        End Try
+        'MsgBox("Se registró nuevo detalle de venta con Exito!")
+        Return True
+    End Function
+
+    Public Function borrarTarjetaPorPago(ByVal idPago As Integer) As Boolean
+        Try
+            oSqlConnection = New OleDbConnection(strConection)
+            Dim CadenaSQL As String
+            CadenaSQL = "delete from TarjetaPorPago where idPago = " & idPago
+            Dim oSqlCommand As New OleDbCommand(CadenaSQL, oSqlConnection)
+            oSqlConnection.Open()
+            oSqlCommand.ExecuteNonQuery()
+            oSqlConnection.Close()
+        Catch ex As Exception
+            MsgBox("Disculpe. No se ha podido Eliminar el detalle de la venta")
+            Return False
+            Exit Function
+        End Try
+        'MsgBox("Se registró nueva Alimento con Exito!")
+        '    Return True
+    End Function
+
+    Public Function buscarTarjetasPagoPorID(ByVal idTarjeta As Integer) As DataSet
+        Try
+            Dim cadena As String
+            cadena = "select * from TarjetaPorPago where idTarjeta = " & idTarjeta
+            oSqlConnection = New OleDbConnection(strConection)
+            oSqlDataAdapter = New OleDbDataAdapter(cadena, oSqlConnection)
+            oDataSet = New DataSet
+            oSqlDataAdapter.Fill(oDataSet)
+            Return oDataSet
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+
+    Public Function buscarTarjetasVentaPorIDPago(ByVal idPago As Integer) As DataSet
+        Try
+            Dim cadena As String
+            cadena = "select * from TarjetaPorPago where idPago = " & idPago
+            oSqlConnection = New OleDbConnection(strConection)
+            oSqlDataAdapter = New OleDbDataAdapter(cadena, oSqlConnection)
+            oDataSet = New DataSet
+            oSqlDataAdapter.Fill(oDataSet)
+            Return oDataSet
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+
+    Public Function buscarTarjetasVentaPorIDOrden(ByVal idVenta As Integer) As DataSet
+        Try
+            Dim cadena As String
+            cadena = "select * from TarjetaPorVenta where idOrden = " & idVenta
+            oSqlConnection = New OleDbConnection(strConection)
+            oSqlDataAdapter = New OleDbDataAdapter(cadena, oSqlConnection)
+            oDataSet = New DataSet
+            oSqlDataAdapter.Fill(oDataSet)
+            Return oDataSet
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+
+    Public Function borrarTarjetaPorOT(ByVal idOrden As Integer) As Boolean
+        Try
+            oSqlConnection = New OleDbConnection(strConection)
+            Dim CadenaSQL As String
+            CadenaSQL = "delete from TarjetaPorVenta where idOrden = " & idOrden
+            Dim oSqlCommand As New OleDbCommand(CadenaSQL, oSqlConnection)
+            oSqlConnection.Open()
+            oSqlCommand.ExecuteNonQuery()
+            oSqlConnection.Close()
+        Catch ex As Exception
+            MsgBox("Disculpe. No se ha podido Eliminar el detalle de la venta")
+            Return False
+            Exit Function
+        End Try
+        'MsgBox("Se registró nueva Alimento con Exito!")
+        '    Return True
+    End Function
+
+
+#End Region
+
+#Region "transferencia"
+
+
+    Public Function nuevaTransferenciaPorPago(ByRef idBanco As Integer, ByRef idPago As Integer) As Boolean
+        Try
+            oSqlConnection = New OleDbConnection(strConection)
+            Dim CadenaSQL As String
+            CadenaSQL = "Insert Into TransferenciaXpago (idBanco, idPago) Values (" & idBanco & "," & idPago & ")"
+            'CadenaSQL = ""
+            Dim oSqlCommand As New OleDbCommand(CadenaSQL, oSqlConnection)
+            oSqlConnection.Open()
+            oSqlCommand.ExecuteNonQuery()
+            oSqlConnection.Close()
+        Catch ex As Exception
+            MsgBox("Disculpe. No se ha podido el detalle de la transferencia")
+            Return False
+        End Try
+        'MsgBox("Se registró nuevo detalle de venta con Exito!")
+        Return True
+    End Function
+
+    Public Function borrarTransferenciaPorPago(ByVal idPago As Integer) As Boolean
+        Try
+            oSqlConnection = New OleDbConnection(strConection)
+            Dim CadenaSQL As String
+            CadenaSQL = "delete from TransferenciaXpago where idPago = " & idPago
+            Dim oSqlCommand As New OleDbCommand(CadenaSQL, oSqlConnection)
+            oSqlConnection.Open()
+            oSqlCommand.ExecuteNonQuery()
+            oSqlConnection.Close()
+        Catch ex As Exception
+            MsgBox("Disculpe. No se ha podido Eliminar el detalle de la transferencia por venta")
+            Return False
+            Exit Function
+        End Try
+        'MsgBox("Se registró nueva Alimento con Exito!")
+        '    Return True
+    End Function
+
+    Public Function buscarTransferenciaVentaPorIDPago(ByVal idPago As Integer) As DataSet
+        Try
+            Dim cadena As String
+            cadena = "select * from TransferenciaXpago, Banco where TransferenciaXventa.idVenta = " & idPago & " and Banco.id = TransferenciaXventa.idBanco"
+            oSqlConnection = New OleDbConnection(strConection)
+            oSqlDataAdapter = New OleDbDataAdapter(cadena, oSqlConnection)
+            oDataSet = New DataSet
+            oSqlDataAdapter.Fill(oDataSet)
+            Return oDataSet
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+#End Region
+
 End Class

@@ -11,27 +11,26 @@ Public Class frmPagos
     Public objCheque As New Cheque
 
     Private Sub frmPagos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        ' se realizo el primer commit GIT
+
         Try
             Me.estadoAbono = 0
-            'Me.txtImporte.Focus()
 
-            'Me.tipoPersona = tipoPersona
             Dim objCondicionVenta As New CondicionVenta
 
+            Me.cargarComboBanco()
+
             If Me.tipoPersona = 1 Then
-                ' Llamada necesaria para el Diseñador de Windows Forms.
-                'InitializeComponent()
+
                 Dim oDataSet As New DataSet
                 Dim objPago As New Pagos
-                'codPago = idPago
+
                 oDataSet = objPago.buscarPagosXid(codPago)
                 llenarComboCondicionVenta()
                 cboCondVenta.SelectedIndex = 0
 
                 If oDataSet.Tables(0).Rows.Count > 0 Then
 
-                    'Me.dtpFechaAlta.Text = oDataSet.Tables(0).Rows(0).Item("fecha_pago")
+
                     Me.txtReciboNumero.Text = Me.generarNumeroRecibo(oDataSet.Tables(0).Rows(0).Item("idPago"))
                     codCliente = oDataSet.Tables(0).Rows(0).Item("idCliente")
                     Dim oDataSetCliente As New DataSet
@@ -41,17 +40,14 @@ Public Class frmPagos
                     Me.txtImporte.Text = oDataSet.Tables(0).Rows(0).Item("importe")
                     Me.cboCondVenta.Text = objCondicionVenta.buscarCondicionVenta(oDataSet.Tables(0).Rows(0).Item("idCondicion_venta")).Tables(0).Rows(0).Item("descripcion")
                 End If
-                'buscar cheques por pagos
-
 
                 If cboCondVenta.Text = "Cheque" Then
                         btnEditarMedioPago.Enabled = True
                     Else
                         btnEditarMedioPago.Enabled = False
                     End If
-                    'cboCondVenta.SelectedIndex = 0
 
-                    If cboCondVenta.Text = "Cheque" Then
+                If cboCondVenta.Text = "Cheque" Then
                         Dim oDataSetCheque As New DataSet
                         oDataSetCheque = objCheque.buscarChequesXidPago(codPago)
                         If oDataSetCheque.Tables(0).Rows.Count > 0 Then
@@ -67,8 +63,6 @@ Public Class frmPagos
 
                         End If
                     End If
-
-                '
 
 
                 If oDataSet.Tables(0).Rows.Count > 0 Then
@@ -90,16 +84,15 @@ Public Class frmPagos
                     btnGuardar.Enabled = True
                     cboCondVenta.Enabled = True
                 End If
-                'btnEditarMedioPago.Enabled = False
+
             Else
-                    'Proveedores
-                    'InitializeComponent()
-                    llenarComboCondicionVenta()
+
+                llenarComboCondicionVenta()
 
                 Dim oDataSet As New DataSet
                 Dim objProveedores As New Proveedores
                 If codPago <> 0 Then
-                    'codPago = idPago
+
                     oDataSet = objProveedores.buscarPagosProveedoresXid(codPago)
 
                     Me.dtpFechaAlta.Text = oDataSet.Tables(0).Rows(0).Item("fecha_pago")
@@ -111,16 +104,12 @@ Public Class frmPagos
                     txtRazonSocialCliente.Text = oDataSetProveedor.Tables(0).Rows(0).Item("razon_social")
                     Me.txtImporte.Text = oDataSet.Tables(0).Rows(0).Item("importe")
 
-
-                    'buscar cheques por pagos
-                    'llenarComboCondicionVenta()
                     Me.cboCondVenta.Text = objCondicionVenta.buscarCondicionVenta(oDataSet.Tables(0).Rows(0).Item("idCondicion_venta")).Tables(0).Rows(0).Item("descripcion")
                     If cboCondVenta.Text = "Cheque" Then
                         btnEditarMedioPago.Enabled = True
                     Else
                         btnEditarMedioPago.Enabled = False
                     End If
-
 
                     If cboCondVenta.Text = "Cheque" Then
                         Dim oDataSetCheque As New DataSet
@@ -149,7 +138,7 @@ Public Class frmPagos
                 Me.btnCancelar.Enabled = True
                 btnGuardar.Enabled = True
                 cboCondVenta.Enabled = True
-                'btnEditarMedioPago.Enabled = True
+
             End If
 
         Catch ex As Exception
@@ -164,6 +153,7 @@ Public Class frmPagos
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
         llenarComboCondicionVenta()
+        Me.llenarComboTarjetas()
         Me.tipoPersona = tipoPersona
         If tipoPersona = 1 Then
 
@@ -212,6 +202,7 @@ Public Class frmPagos
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
         Me.inicializarControles()
+        Me.llenarComboTarjetas()
         cerrar = False
     End Sub
 
@@ -282,10 +273,7 @@ Public Class frmPagos
                     Exit Sub
                 End If
                 If cboCondVenta.Text = "Cheque" Then
-                    'Dim objCheque As New Cheque
-                    'Dim frmRegistrarCheque As New frmRegistrarCheque
-                    'frmRegistrarCheque.Show()
-                    'objCheque = frmRegistrarCheque.objCheque
+
                     If objCheque.emisor = Nothing Then
                         MsgBox("no se encuentran datos registrados del cheque")
                         Exit Sub
@@ -293,7 +281,7 @@ Public Class frmPagos
                         If objPago.ultimoPago.Tables(0).Rows(0).Item(0).ToString = "" Then
                             ultimoReciboAbonado = 0
                         Else
-                            'MsgBox(objPago.ultimoPago.Tables(0).Rows(0).Item(0).ToString)
+
                             ultimoReciboAbonado = objPago.ultimoPago.Tables(0).Rows(0).Item(0)
                         End If
 
@@ -325,7 +313,6 @@ Public Class frmPagos
                 If MsgBox("La siguiente acción modificará el pago" & vbNewLine & "¿Desea Continuar?", MsgBoxStyle.YesNo, "SISTEMAS GESTIÓN DE VENTAS Y STOCK") = MsgBoxResult.Yes Then
 
                     objPago.idPago = codPago
-                    'objPago.idCliente = codCliente
 
                     objPago.modificarPago(objPago)
                     objCheque.borrarChequeXPago(codPago)
@@ -452,12 +439,15 @@ Public Class frmPagos
         Me.txtImporte.Enabled = False
         Me.txtRazonSocialCliente.Enabled = False
         Me.txtReciboNumero.Enabled = False
+        Me.txtRecargo.Visible = False
 
         Me.txtImporte.Text = ""
         Me.txtRazonSocialCliente.Text = ""
         Me.txtReciboNumero.Text = ""
-
+        Me.txtRecargo.Text = ""
         Me.dtpFechaAlta.Enabled = False
+
+        Me.Label16.Visible = False
     End Sub
 
     Private Sub tssNuevo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tssNuevo.Click
@@ -668,24 +658,80 @@ Public Class frmPagos
     End Sub
 
     Private Sub cboCondVenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCondVenta.SelectedIndexChanged
+        'If accion = "" Then
+        'Else
+        '    If cboCondVenta.Text = "Tarjeta" Then
+        '        'Me.cboTipoTarjeta.Enabled = True
+        '        'Me.txtNroCupon.Enabled = True
+        '        btnEditarMedioPago.Enabled = False
+        '    ElseIf cboCondVenta.Text = "Cheque" Then
+        '        btnEditarMedioPago.Enabled = True
+
+
+        '    Else
+        '        'Me.cboTipoTarjeta.Enabled = False
+        '        'Me.txtNroCupon.Enabled = False
+        '        'Me.txtRecargo.Text = 0
+        '        'Me.cboTipoTarjeta.SelectedIndex = -1
+        '        'Me.txtNroCupon.Text = ""
+        '        Me.txtObservaciones.Text = ""
+        '        btnEditarMedioPago.Enabled = False
+        '    End If
+        'End If
         If accion = "" Then
         Else
             If cboCondVenta.Text = "Tarjeta" Then
-                'Me.cboTipoTarjeta.Enabled = True
-                'Me.txtNroCupon.Enabled = True
+                Me.cboTipoTarjeta.Enabled = True
+                Me.txtNroCupon.Enabled = True
                 btnEditarMedioPago.Enabled = False
+                Me.cboTipoTarjeta.Visible = True
+                Me.Label32.Visible = True
+                Me.Label32.Text = "Tarjeta"
+                Me.Label28.Visible = True
+                'Me.Label16.Visible = True
+                Me.txtNroCupon.Visible = True
+                Me.cboBanco.Visible = False
+                Me.cboBanco.SelectedIndex = -1
+                Me.btnEditarMedioPago.Enabled = False
+                Me.txtObservaciones.Text = ""
+                'Me.txtRecargo.Visible = True
             ElseIf cboCondVenta.Text = "Cheque" Then
                 btnEditarMedioPago.Enabled = True
-
-
+                Me.cboTipoTarjeta.Visible = False
+                Me.Label32.Visible = False
+                Me.Label28.Visible = False
+                Me.txtNroCupon.Visible = False
+                Me.cboBanco.Visible = False
+                Me.txtRecargo.Visible = False
+                Me.Label16.Visible = False
+            ElseIf cboCondVenta.Text = "Transferencia" Then
+                Me.cboTipoTarjeta.Visible = False
+                Me.Label32.Visible = True
+                Me.Label32.Text = "Banco"
+                Me.Label28.Visible = False
+                Me.txtNroCupon.Visible = False
+                Me.cboBanco.Visible = True
+                Me.cboBanco.SelectedIndex = -1
+                Me.btnEditarMedioPago.Enabled = False
+                Me.txtObservaciones.Text = ""
+                Me.txtRecargo.Visible = False
+                Me.Label16.Visible = False
             Else
-                'Me.cboTipoTarjeta.Enabled = False
-                'Me.txtNroCupon.Enabled = False
-                'Me.txtRecargo.Text = 0
-                'Me.cboTipoTarjeta.SelectedIndex = -1
-                'Me.txtNroCupon.Text = ""
+                Me.cboTipoTarjeta.Enabled = False
+                Me.txtNroCupon.Enabled = False
+                Me.txtRecargo.Text = 0
+                Me.cboTipoTarjeta.SelectedIndex = -1
+                Me.txtNroCupon.Text = ""
                 Me.txtObservaciones.Text = ""
                 btnEditarMedioPago.Enabled = False
+                Me.cboTipoTarjeta.Visible = False
+                Me.Label32.Visible = False
+                Me.Label28.Visible = False
+                Me.txtNroCupon.Visible = False
+                Me.cboBanco.Visible = False
+                Me.txtObservaciones.Text = ""
+                Me.txtRecargo.Visible = False
+                Me.Label16.Visible = False
             End If
         End If
     End Sub
@@ -729,4 +775,40 @@ Public Class frmPagos
             Me.cboCondVenta.SelectedIndex = 0
         End If
     End Sub
+
+    Private Sub llenarComboTarjetas()
+        Dim objVentas As New Ventas
+        Dim oDataSet As New DataSet
+        oDataSet = objVentas.buscarTarjetasVenta
+        If oDataSet.Tables(0).Rows.Count <> 0 Then
+            Me.cboTipoTarjeta.DataSource = oDataSet.Tables(0)
+            Me.cboTipoTarjeta.DisplayMember = oDataSet.Tables(0).Columns(1).Caption.ToString
+            Me.cboTipoTarjeta.ValueMember = oDataSet.Tables(0).Columns(0).Caption.ToString
+            Me.cboTipoTarjeta.SelectedIndex = -1
+        End If
+    End Sub
+
+    Private Sub cboTipoTarjeta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboTipoTarjeta.SelectedIndexChanged
+        Try
+            Dim objVentas As New Ventas
+            Dim oDataSet As New DataSet
+            oDataSet = objVentas.buscarTarjetasVenta(Me.cboTipoTarjeta.SelectedValue)
+            Me.txtRecargo.Text = Replace(oDataSet.Tables(0).Rows(0).Item("porcRecargo"), ".", ",")
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub cargarComboBanco()
+        Dim objBanco As New Banco
+        Dim oDataSet As New DataSet
+        oDataSet = objBanco.buscarBancosPropios
+        If oDataSet.Tables(0).Rows.Count <> 0 Then
+            Me.cboBanco.DataSource = oDataSet.Tables(0)
+            Me.cboBanco.DisplayMember = oDataSet.Tables(0).Columns(1).Caption.ToString
+            Me.cboBanco.ValueMember = oDataSet.Tables(0).Columns(0).Caption.ToString
+            Me.cboBanco.SelectedIndex = -1
+        End If
+    End Sub
+
 End Class
